@@ -17,13 +17,13 @@ if [ -z "$TRAVIS_BRANCH" ]; then
 fi
 
 # Check if GitHub token set
-if [[ -z "$DH_USER" || -z "$DH_TOKEN" ]]; then
+if [[ -z "$DH_USERNAME" || -z "$DH_PASSWORD" ]]; then
     echo "Error: DOCKERHUB environment variables not set"
     exit 2
 fi
 
 # Login to dockerhub
-docker login --username="$DH_USER" --password="$DH_TOKEN"
+echo "${DH_PASSWORD}" | docker login --username $DH_USERNAME --password-stdin
 
 # Register qemu static bins
 docker run --rm --privileged multiarch/qemu-user-static:register
