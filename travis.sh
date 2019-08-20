@@ -17,7 +17,7 @@ if [ -z "$TRAVIS_BRANCH" ]; then
 fi
 
 # Check if GitHub token set
-if [ -z "$DH_USER" || -z "$DH_TOKEN" ]; then
+if [[ -z "$DH_USER" || -z "$DH_TOKEN" ]]; then
     echo "Error: DOCKERHUB environment variables not set"
     exit 2
 fi
