@@ -1,13 +1,14 @@
 #!/bin/bash
 
-rclone_ver=$(curl -s https://downloads.rclone.org/version.txt | cut -d"v" -f2)
-build_date=$(date +"%Y%m%dT%H%M%S")
+rclone_ver=${rclone_ver:-$(curl -s https://downloads.rclone.org/version.txt | cut -d"v" -f2)}
+build_date=${build_date:-$(date +"%Y%m%dT%H%M%S")}
+
 
 for docker_arch in amd64 arm32v6 arm64v8; do
     case ${docker_arch} in
-        amd64   ) qemu_arch="x86_64"  rclone_arch="amd64" ;;
-        arm32v6 ) qemu_arch="arm"     rclone_arch="arm"   ;;
-        arm64v8 ) qemu_arch="aarch64" rclone_arch="arm64" ;;    
+        amd64   ) qemu_arch="x86_64"  rclone_arch="amd64" image_arch="amd64" image_variant="" ;;
+        arm32v6 ) qemu_arch="arm"     rclone_arch="arm"   image_arch="arm"   image_variant=""  ;;
+        arm64v8 ) qemu_arch="aarch64" rclone_arch="arm64" image_arch="arm64" image_variant="armv8" ;;    
     esac
     cp Dockerfile.cross Dockerfile.${docker_arch}
     sed -i "s|__BASEIMAGE_ARCH__|${docker_arch}|g" Dockerfile.${docker_arch}
@@ -23,7 +24,7 @@ for docker_arch in amd64 arm32v6 arm64v8; do
     fi
 
 
-    # Check for Qemu static bins
+    # Check for qemu static bins
     if [[ ! -f qemu-${qemu_arch}-static ]]; then
         echo "Downloading the qemu static binaries for ${docker_arch}"
         wget -q -N https://github.com/multiarch/qemu-user-static/releases/download/v4.0.0-4/x86_64_qemu-${qemu_arch}-static.tar.gz
@@ -32,12 +33,21 @@ for docker_arch in amd64 arm32v6 arm64v8; do
     fi
 
 
-    # Perform Build
+    # Build
     if [ "$EUID" -ne 0 ]; then
-        #sudo docker build -f Dockerfile.${docker_arch} -t lucashalbert/docker-rclone:${docker_arch}-latest .
         sudo docker build -f Dockerfile.${docker_arch} -t lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} .
+        sudo docker push lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} .
+        sudo DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} lucashalbert/docker-rclone:${docker_arch}-${rclone_ver}
+        sudo DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch} --variant ${image_variant}
+        sudo DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push lucashalbert/docker-rclone:${docker_arch}-${rclone_ver}
     else
         #docker build -f Dockerfile.${docker_arch} -t lucashalbert/docker-rclone:${docker_arch}-latest .
-        docker build -f Dockerfile.${docker_arch} -t lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} .
+        docker build -f Dockerfile.${docker_arch} -t lucashalbert/docker-rclone:${rclone_ver} .
+        docker push lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} .
+        DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} lucashalbert/docker-rclone:${docker_arch}-${rclone_ver}
+        DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch} --variant ${image_variant}
+        DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push lucashalbert/docker-rclone:${docker_arch}-${rclone_ver}
     fi
 done
+
+
