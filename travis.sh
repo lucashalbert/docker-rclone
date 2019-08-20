@@ -4,9 +4,6 @@ set -e
 
 SECONDS=0
 
-# source common variables
-. common_vars
-
 # Get start time
 START_TIME=$(date +"%Y%m%dT%H%M%S")
 echo "Start Time: ${START_TIME}"
@@ -33,4 +30,12 @@ docker run --rm --privileged multiarch/qemu-user-static:register
 
 # Run the build
 ./build.sh
+
+# Get start time
+END_TIME=$(date +"%Y%m%dT%H%M")
+
+# Display build time statistics
+echo "Build Start Time: ${START_TIME}"
+echo "Build End Time: ${END_TIME}"
+echo "Build Duration: $(($SECONDS / 60)) minutes $((${SECONDS} % 60)) seconds"
 
