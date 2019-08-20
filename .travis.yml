@@ -2,6 +2,10 @@ language: bash
 services:
   - docker
 sudo: required
+addons:
+  apt:
+    packages:
+      - docker-ce
 script:
   - ./travis.sh
 after_success:
