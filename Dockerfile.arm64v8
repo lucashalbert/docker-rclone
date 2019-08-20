@@ -1,8 +1,8 @@
 FROM arm64v8/alpine
 
 ENV WORKDIR=/workdir \
-    RCLONE_VER=v1.48.0 \
-    BUILD_DATE=20190820T154709 \
+    RCLONE_VER=1.48.0 \
+    BUILD_DATE=20190820T171952 \
     QEMU_ARCH=aarch64 \
     ARCH=arm64
 

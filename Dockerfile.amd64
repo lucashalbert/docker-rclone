@@ -1,8 +1,8 @@
 FROM amd64/alpine
 
 ENV WORKDIR=/workdir \
-    RCLONE_VER=v1.48.0 \
-    BUILD_DATE=20190820T154709 \
+    RCLONE_VER=1.48.0 \
+    BUILD_DATE=20190820T171952 \
     ARCH=amd64
 
 LABEL build_version="Version:- ${RCLONE_VER} Build-date:- ${BUILD_DATE}"

@@ -17,6 +17,7 @@ for docker_arch in amd64 arm32v6 arm64v8; do
     sed -i "s|__BUILD_DATE__|${build_date}|g" Dockerfile.${docker_arch}
     if [ ${docker_arch} == 'amd64' ]; then
         sed -i "/__CROSS__/d" Dockerfile.${docker_arch}
+        cp Dockerfile.${docker_arch} Dockerfile
     else
         sed -i "s/__CROSS__//g" Dockerfile.${docker_arch}
     fi
