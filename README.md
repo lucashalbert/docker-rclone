@@ -9,7 +9,7 @@ A multi-architecture rclone image built on alpine linux. This image is compatibl
 [![Docker Layers](https://images.microbadger.com/badges/image/lucashalbert/docker-rclone.svg)][microbadger]
 [![Docker Pulls](https://img.shields.io/docker/pulls/lucashalbert/docker-rclone.svg)][dockerstore]
 [![Docker Stars](https://img.shields.io/docker/stars/lucashalbert/docker-rclone.svg)][dockerstore]
----
+
 ## Rclone
 Excerpt from the rclone [homepage][rclone-home].
 
