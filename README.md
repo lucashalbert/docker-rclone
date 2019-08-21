@@ -3,12 +3,18 @@
 [microbadger]: https://microbadger.com/images/lucashalbert/docker-rclone
 [dockerstore]: https://store.docker.com/community/images/lucashalbert/docker-rclone
 # docker-rclone
-![Travis-CI Build Status](https://travis-ci.org/lucashalbert/docker-rclone.svg?branch=master) [![Docker Layers](https://images.microbadger.com/badges/image/lucashalbert/docker-rclone.svg)][microbadger] [![Docker Pulls](https://img.shields.io/docker/pulls/lucashalbert/docker-rclone.svg)][dockerstore] [![Docker Stars](https://img.shields.io/docker/stars/lucashalbert/docker-rclone.svg)][dockerstore]
 A multi-architecture rclone image built on alpine linux. This image is compatible with arm32v6, arm32v7, arm64v8, and x86_64.
+
+![Travis-CI Build Status](https://travis-ci.org/lucashalbert/docker-rclone.svg?branch=master)
+[![Docker Layers](https://images.microbadger.com/badges/image/lucashalbert/docker-rclone.svg)][microbadger]
+[![Docker Pulls](https://img.shields.io/docker/pulls/lucashalbert/docker-rclone.svg)][dockerstore]
+[![Docker Stars](https://img.shields.io/docker/stars/lucashalbert/docker-rclone.svg)][dockerstore]
 ---
 ## Rclone
 Excerpt from the rclone [homepage][rclone-home].
+
 ![Rclone](https://rclone.org/img/rclone-120x120.png)
+
 Rclone is a command line program to sync files and directories to and from:
 
 * Alibaba Cloud (Aliyun) Object Storage System (OSS)  
