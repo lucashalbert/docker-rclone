@@ -1,17 +1,20 @@
 FROM amd64/alpine
 
-ENV WORKDIR=/workdir \
-    RCLONE_VER=1.48.0 \
-    BUILD_DATE=20190820T171952 \
-    ARCH=amd64
+ENV RCLONE_VER=1.48.0 \
+    BUILD_DATE=20190821T191524 \
+    ARCH=amd64 \
+    SUBCMD="" \
+    CONFIG="--config /config/rclone.conf" \
+    PARAMS=""
 
 LABEL build_version="Version:- ${RCLONE_VER} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="lucashalbert <lhalbert@lhalbert.xyz>"
+LABEL maintainer="Lucas Halbert <lhalbert@lhalbert.xyz>"
+MAINTAINER Lucas Halbert <lhalbert@lhalbert.xyz>
 
 
-RUN apk add --no-cache --update fuse fuse-dev unzip curl mdocml-apropos curl-doc && \
-    curl -O https://downloads.rclone.org/rclone-current-linux-${ARCH}.zip && \
-    unzip rclone-current-linux-${ARCH}.zip && \
+RUN apk add --no-cache --update ca-certificates fuse fuse-dev unzip curl mdocml-apropos curl-doc && \
+    curl -O https://downloads.rclone.org/v${RCLONE_VER}/rclone-v${RCLONE_VER}-linux-${ARCH}.zip && \
+    unzip rclone-v${RCLONE_VER}-linux-${ARCH}.zip && \
     cd rclone-*-linux-${ARCH} && \
     cp rclone /usr/bin/ && \
     chown root:root /usr/bin/rclone && \
@@ -19,15 +22,13 @@ RUN apk add --no-cache --update fuse fuse-dev unzip curl mdocml-apropos curl-doc
     mkdir -p /usr/share/man/man1 && \
     cp rclone.1 /usr/share/man/man1/ && \
     makewhatis /usr/share/man && \
-    apk del unzip curl && \
+    apk del --purge unzip curl && \
     cd ../ && \
-    rm -f rclone-current-linux-${ARCH}.zip && \
+    rm -f rclone-v${RCLONE_VER}-linux-${ARCH}.zip && \
     rm -r rclone-*-linux-${ARCH}
 
 
+COPY docker-entrypoint.sh /usr/bin/
 
-WORKDIR ${WORKDIR}
 
-COPY docker-entrypoint.sh ${WORKDIR}/
-
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["docker-entrypoint.sh"]

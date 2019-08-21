@@ -2,19 +2,22 @@ FROM arm64v8/alpine
 
 ENV WORKDIR=/workdir \
     RCLONE_VER=1.48.0 \
-    BUILD_DATE=20190820T171952 \
+    BUILD_DATE=20190821T153240 \
     QEMU_ARCH=aarch64 \
     ARCH=arm64
 
 LABEL build_version="Version:- ${RCLONE_VER} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="lucashalbert <lhalbert@lhalbert.xyz>"
+LABEL maintainer="Lucas Halbert <lhalbert@lhalbert.xyz>"
+MAINTAINER Lucas Halbert <lhalbert@lhalbert.xyz>
 
 # COPY static qemu binary for cross-platform support
 COPY qemu-${QEMU_ARCH}-static /usr/bin/
 
 RUN apk add --no-cache --update fuse fuse-dev unzip curl mdocml-apropos curl-doc && \
-    curl -O https://downloads.rclone.org/rclone-current-linux-${ARCH}.zip && \
-    unzip rclone-current-linux-${ARCH}.zip && \
+#    curl -O https://downloads.rclone.org/rclone-current-linux-${ARCH}.zip && \
+    curl -O https://downloads.rclone.org/v${RCLONE_VER}/rclone-v${RCLONE_VER}-linux-${ARCH}.zip && \
+    #unzip rclone-current-linux-${ARCH}.zip && \
+    unzip rclone-v${RCLONE_VER}-linux-${ARCH}.zip && \
     cd rclone-*-linux-${ARCH} && \
     cp rclone /usr/bin/ && \
     chown root:root /usr/bin/rclone && \
@@ -24,7 +27,8 @@ RUN apk add --no-cache --update fuse fuse-dev unzip curl mdocml-apropos curl-doc
     makewhatis /usr/share/man && \
     apk del unzip curl && \
     cd ../ && \
-    rm -f rclone-current-linux-${ARCH}.zip && \
+    #rm -f rclone-current-linux-${ARCH}.zip && \
+    rm -f rclone-v${RCLONE_VER}-linux-${ARCH}.zip && \
     rm -r rclone-*-linux-${ARCH}
 
 #  Delete static qemu binary

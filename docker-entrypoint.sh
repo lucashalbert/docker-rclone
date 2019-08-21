@@ -1,3 +1,5 @@
 #!/bin/sh
 
-sleep 3600
+#/usr/bin/rclone mount ${RCLONE_CONFIG_OPTS} ${RCLONE_OPTS} gcrypt: /mnt/
+
+/usr/bin/rclone ${SUBCMD} ${CONFIG} ${PARAMS}
