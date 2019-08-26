@@ -3,8 +3,7 @@
 rclone_ver=${rclone_ver:-$(curl -s https://downloads.rclone.org/version.txt | cut -d"v" -f2)}
 build_date=${build_date:-$(date +"%Y%m%dT%H%M%S")}
 
-#for docker_arch in amd64 arm32v6 arm64v8; do
-for docker_arch in amd64; do
+for docker_arch in amd64 arm32v6 arm64v8; do
     case ${docker_arch} in
         amd64   ) qemu_arch="x86_64"  rclone_arch="amd64" ;;
         arm32v6 ) qemu_arch="arm"     rclone_arch="arm"   ;;
