@@ -57,13 +57,13 @@ for docker_arch in amd64 arm32v6 arm64v8; do
     DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} lucashalbert/docker-rclone:${docker_arch}-${rclone_ver}
 
     # Annotate arch/ver and latest docker manifests
-    if [[ ${docker_arch} == "arm64v8" ]]; then
-        DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch} --variant ${image_variant}
-        DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/docker-rclone:latest lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch} --variant ${image_variant}
-    else
+#    if [[ ${docker_arch} == "arm64v8" ]]; then
+#        DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch} --variant ${image_variant}
+#        DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/docker-rclone:latest lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch} --variant ${image_variant}
+#    else
         DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch}
         DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/docker-rclone:latest lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch}
-    fi
+#    fi
 
     # Push arch/ver docker manifest
     DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push lucashalbert/docker-rclone:${docker_arch}-${rclone_ver}
