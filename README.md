@@ -2,7 +2,7 @@
 [travis]: https://travis-ci.org/lucashalbert/docker-rclone
 [microbadger]: https://microbadger.com/images/lucashalbert/docker-rclone
 [dockerstore]: https://store.docker.com/community/images/lucashalbert/docker-rclone
-# docker-rclone
+# docker-rclone (Rclone v1.49.0)
 A multi-architecture rclone image built on alpine linux. This image is compatible with arm32v6, arm32v7, arm64v8, and x86_64.
 
 ![Travis-CI Build Status](https://travis-ci.org/lucashalbert/docker-rclone.svg?branch=master)
