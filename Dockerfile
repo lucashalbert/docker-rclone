@@ -1,7 +1,7 @@
 FROM amd64/alpine
 
 ENV RCLONE_VER=1.49.0 \
-    BUILD_DATE=20190826T210522 \
+    BUILD_DATE=20190827T131120 \
     ARCH=amd64 \
     SUBCMD="" \
     CONFIG="--config /config/rclone.conf" \

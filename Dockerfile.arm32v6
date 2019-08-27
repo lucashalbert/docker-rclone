@@ -1,7 +1,7 @@
 FROM arm32v6/alpine
 
 ENV RCLONE_VER=1.49.0 \
-    BUILD_DATE=20190826T210522 \
+    BUILD_DATE=20190827T131120 \
     QEMU_ARCH=arm \
     ARCH=arm \
     SUBCMD="" \

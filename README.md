@@ -80,7 +80,7 @@ docker create \
     --name=rclone \
     --privileged \
     -v $(pwd)/config:/config \
-    -v $(pwd)/mnt:/mnt \
+    -v $(pwd)/mnt:/mnt:shared \
     --env CONFIG="--config /config/rclone.conf" \
     --env SUBCMD="mount" \
     --env PARAMS="--allow-other --allow-non-empty gcrypt: /mnt/" lucashalbert/docker-rclone
