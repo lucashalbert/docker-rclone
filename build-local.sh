@@ -1,5 +1,4 @@
 #!/bin/bash
-rclone_ver=1.49.5
 rclone_ver=${rclone_ver:-$(curl -s https://downloads.rclone.org/version.txt | cut -d"v" -f2)}
 build_date=${build_date:-$(date +"%Y%m%dT%H%M%S")}
 
