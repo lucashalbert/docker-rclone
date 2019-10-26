@@ -32,10 +32,10 @@ for docker_arch in amd64 arm32v6 arm64v8; do
 
     # Build
     if [ "$EUID" -ne 0 ]; then
-        sudo docker build -f Dockerfile.${docker_arch} -t lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} .
-        #sudo docker push lucashalbert/docker-rclone:${docker_arch}-${rclone_ver}
+        sudo docker build -f Dockerfile.${docker_arch} -t lucashalbert/rclone:${docker_arch}-${rclone_ver} .
+        #sudo docker push lucashalbert/rclone:${docker_arch}-${rclone_ver}
     else
-        docker build -f Dockerfile.${docker_arch} -t lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} .
-        #docker push lucashalbert/docker-rclone:${docker_arch}-${rclone_ver}
+        docker build -f Dockerfile.${docker_arch} -t lucashalbert/rclone:${docker_arch}-${rclone_ver} .
+        #docker push lucashalbert/rclone:${docker_arch}-${rclone_ver}
     fi
 done
