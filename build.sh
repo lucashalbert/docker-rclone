@@ -32,26 +32,26 @@ for docker_arch in amd64 arm32v6 arm64v8; do
 
     # Build
     if [ "$EUID" -ne 0 ]; then
-        sudo docker build -f Dockerfile.${docker_arch} -t lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} .
-        sudo docker push lucashalbert/docker-rclone:${docker_arch}-${rclone_ver}
+        sudo docker build -f Dockerfile.${docker_arch} -t lucashalbert/rclone:${docker_arch}-${rclone_ver} .
+        sudo docker push lucashalbert/rclone:${docker_arch}-${rclone_ver}
     else
-        docker build -f Dockerfile.${docker_arch} -t lucashalbert/docker-rclone:${docker_arch}-${rclone_var} .
-        docker push lucashalbert/docker-rclone:${docker_arch}-${rclone_ver}
+        docker build -f Dockerfile.${docker_arch} -t lucashalbert/rclone:${docker_arch}-${rclone_var} .
+        docker push lucashalbert/rclone:${docker_arch}-${rclone_ver}
 
         # Create and annotate arch-version manifest
-        DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} lucashalbert/docker-rclone:${docker_arch}-${rclone_ver}
-        DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch}
-        DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push lucashalbert/docker-rclone:${docker_arch}-${rclone_ver}
+        DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create lucashalbert/rclone:${docker_arch}-${rclone_ver} lucashalbert/rclone:${docker_arch}-${rclone_ver}
+        DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/rclone:${docker_arch}-${rclone_ver} lucashalbert/rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch}
+        DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push lucashalbert/rclone:${docker_arch}-${rclone_ver}
     fi
 done
 
 
 
 # Create version specific docker manifest
-DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create lucashalbert/docker-rclone:${rclone_ver} lucashalbert/docker-rclone:amd64-${rclone_ver} lucashalbert/docker-rclone:arm32v6-${rclone_ver} lucashalbert/docker-rclone:arm64v8-${rclone_ver}
+DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create lucashalbert/rclone:${rclone_ver} lucashalbert/rclone:amd64-${rclone_ver} lucashalbert/rclone:arm32v6-${rclone_ver} lucashalbert/rclone:arm64v8-${rclone_ver}
 
 # Create latest docker manifest
-DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create lucashalbert/docker-rclone:latest lucashalbert/docker-rclone:amd64-${rclone_ver} lucashalbert/docker-rclone:arm32v6-${rclone_ver} lucashalbert/docker-rclone:arm64v8-${rclone_ver}
+DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create lucashalbert/rclone:latest lucashalbert/rclone:amd64-${rclone_ver} lucashalbert/rclone:arm32v6-${rclone_ver} lucashalbert/rclone:arm64v8-${rclone_ver}
 
 for docker_arch in amd64 arm32v6 arm64v8; do
     case ${docker_arch} in
@@ -61,14 +61,14 @@ for docker_arch in amd64 arm32v6 arm64v8; do
     esac
 
     # Annotate version specific docker manifest
-    DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/docker-rclone:${rclone_ver} lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch}
+    DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/rclone:${rclone_ver} lucashalbert/rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch}
 
     # Annotate latest docker manifest
-    DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/docker-rclone:latest lucashalbert/docker-rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch}
+    DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/rclone:latest lucashalbert/rclone:${docker_arch}-${rclone_ver} --os linux --arch ${image_arch}
 done
 
 # Push version specific docker manifest
-DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push lucashalbert/docker-rclone:${rclone_ver}
+DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push lucashalbert/rclone:${rclone_ver}
 
 # Push latest docker manifest
-DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push lucashalbert/docker-rclone:latest
+DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push lucashalbert/rclone:latest
