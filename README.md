@@ -1,12 +1,12 @@
 [rclone-home]: https://rclone.org
 [rclone-logo]: https://rclone.org/img/logo_on_dark__horizontal_color.svg
-[travis]: https://travis-ci.org/lucashalbert/docker-rclone
+[travis]: https://travis-ci.com/lucashalbert/docker-rclone
 [microbadger]: https://microbadger.com/images/lucashalbert/rclone
 [dockerstore]: https://store.docker.com/community/images/lucashalbert/rclone
 # docker-rclone
 A multi-architecture rclone image built on alpine linux. This image is compatible with arm32v6, arm32v7, arm64v8, and x86_64.
 
-[![Travis-CI Build Status](https://travis-ci.org/lucashalbert/docker-rclone.svg?branch=master)][travis]
+[![Travis-CI Build Status](https://travis-ci.com/lucashalbert/docker-rclone.svg?branch=master)][travis]
 [![Docker Layers](https://images.microbadger.com/badges/image/lucashalbert/rclone.svg)][microbadger]
 [![Docker Pulls](https://img.shields.io/docker/pulls/lucashalbert/rclone.svg)][dockerstore]
 [![Docker Stars](https://img.shields.io/docker/stars/lucashalbert/rclone.svg)][dockerstore]
