@@ -127,7 +127,7 @@ docker run --privileged \
     -v $(pwd)/mnt:/mnt:shared \
     --env CONFIG="--config /config/rclone.conf" \
     --env SUBCMD="mount" \
-    --env PARAMS="--allow-other --allow-non-empty gdrive-crypt: /mnt/" lucashalbert/rclone
+    --env PARAMS="--allow-other --allow-non-empty gcache-crypt: /mnt/" lucashalbert/rclone
 ```
 
 #### Copy files from local system to remote
