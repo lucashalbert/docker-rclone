@@ -1,17 +1,24 @@
 [rclone-home]: https://rclone.org
 [rclone-logo]: https://rclone.org/img/logo_on_dark__horizontal_color.svg
+[github-lucashalbert/docker-rclone]: https://github.com/lucashalbert/docker-rclone
 [travis]: https://travis-ci.com/lucashalbert/docker-rclone
 [microbadger]: https://microbadger.com/images/lucashalbert/rclone
 [dockerstore]: https://store.docker.com/community/images/lucashalbert/rclone
-# docker-rclone
+
+
+# [![rclone-logo][rclone-logo]][rclone-home] RCLONE
+---
 A multi-architecture rclone image built on alpine linux. This image is compatible with arm32v6, arm32v7, arm64v8, and x86_64.
 
 [![Travis-CI Build Status](https://travis-ci.com/lucashalbert/docker-rclone.svg?branch=master)][travis]
-[![Docker Layers](https://images.microbadger.com/badges/image/lucashalbert/rclone.svg)][microbadger]
-[![Docker Pulls](https://img.shields.io/docker/pulls/lucashalbert/rclone.svg)][dockerstore]
-[![Docker Stars](https://img.shields.io/docker/stars/lucashalbert/rclone.svg)][dockerstore]
+[![Image Version](https://img.shields.io/docker/v/lucashalbert/rclone/latest)][github-lucashalbert/docker-rclone]
+[![Image Layers](https://img.shields.io/microbadger/layers/lucashalbert/rclone/latest)][dockerstore]
+[![Image Size](https://badgen.net/docker/size/lucashalbert/rclone)][dockerstore]
+[![Docker Pulls](https://badgen.net/docker/pulls/lucashalbert/rclone)][dockerstore]
+[![Docker Stars](https://badgen.net/docker/stars/lucashalbert/rclone?icon=docker&label=stars)][dockerstore]
 
-[![Rclone][rclone-logo]][rclone-home]
+---
+
 Rclone is a command line program to sync files and directories to and from:
 
 * Alibaba Cloud (Aliyun) Object Storage System (OSS)  
@@ -76,7 +83,7 @@ Features
 sudo docker run -it \
     -v $(pwd)/config:/config \
      --entrypoint=rclone \
-     lucashalbert/docker-rclone:latest \
+     lucashalbert/rclone:latest \
      --config /config/rclone.conf config
 ```
 ##### Example Google Drive Rclone Configuration
@@ -120,7 +127,7 @@ docker run --privileged \
     -v $(pwd)/mnt:/mnt:shared \
     --env CONFIG="--config /config/rclone.conf" \
     --env SUBCMD="mount" \
-    --env PARAMS="--allow-other --allow-non-empty gdrive-crypt: /mnt/" lucashalbert/docker-rclone
+    --env PARAMS="--allow-other --allow-non-empty gdrive-crypt: /mnt/" lucashalbert/rclone
 ```
 
 #### Copy files from local system to remote
