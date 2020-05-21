@@ -1,7 +1,8 @@
 FROM arm64v8/alpine
 
-ENV RCLONE_VER=1.49.5 \
-    BUILD_DATE=20191026T002433 \
+ENV RCLONE_VER=1.51.0 \
+    BUILD_DATE=20200521T175740 \
+    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     QEMU_ARCH=aarch64 \
     ARCH=arm64 \
     SUBCMD="" \
@@ -15,7 +16,11 @@ MAINTAINER Lucas Halbert <lhalbert@lhalbert.xyz>
 # COPY static qemu binary for cross-platform support
 COPY qemu-${QEMU_ARCH}-static /usr/bin/
 
-RUN apk add --no-cache --update ca-certificates fuse fuse-dev unzip curl mdocml-apropos curl-doc && \
+# Add s6 overlay
+ADD https://github.com/just-containers/s6-overlay/releases/download/v2.0.0.1/s6-overlay-aarch64.tar.gz /tmp/
+RUN gunzip -c /tmp/s6-overlay-aarch64.tar.gz | tar -xf - -C /
+
+RUN apk add --no-cache --update ca-certificates fuse fuse-dev unzip curl mdocml-apropos curl-doc bash shadow && \
     curl -O https://downloads.rclone.org/v${RCLONE_VER}/rclone-v${RCLONE_VER}-linux-${ARCH}.zip && \
     unzip rclone-v${RCLONE_VER}-linux-${ARCH}.zip && \
     cd rclone-*-linux-${ARCH} && \
@@ -26,14 +31,19 @@ RUN apk add --no-cache --update ca-certificates fuse fuse-dev unzip curl mdocml-
     cp rclone.1 /usr/share/man/man1/ && \
     makewhatis /usr/share/man && \
     apk del --purge unzip curl && \
+    rm -rf /var/cache/apk/* /tmp/* && \
     cd ../ && \
     rm -f rclone-v${RCLONE_VER}-linux-${ARCH}.zip && \
-    rm -r rclone-*-linux-${ARCH}
+    rm -r rclone-*-linux-${ARCH} && \
+    groupmod -g 1000 users && \
+    useradd -u 911 -U -d /config -s /bin/false abc && \
+    usermod -G users abc
+
+# Add s6-overlay configs
+ADD ./etc /etc
 
 #  Delete static qemu binary
 RUN rm -f /usr/bin/qemu-${QEMU_ARCH}-static
 
-COPY docker-entrypoint.sh /usr/bin/
-
-
-ENTRYPOINT ["docker-entrypoint.sh"]
+# s6 overlay entrypoint
+ENTRYPOINT ["/init"]
